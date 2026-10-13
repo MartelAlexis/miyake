@@ -70,7 +70,7 @@ export default function Store() {
 
   return <div className="shop">
     <header>
-      <div className="header-left"><a className="brand-link" href="#/"><span className="brand-mark">G</span><b>GesCOM <small>Store</small></b></a></div>
+      <div className="header-left"><a className="brand-link" href="#/"><span className="brand-mark">G</span><b>Miyake <small>Store</small></b></a></div>
       <label className="store-search"><Icon name="search" /><input value={q} onChange={e => { setQ(e.target.value); if (view !== 'catalogo') go('/catalogo') }} placeholder="¿Qué estás buscando hoy?" /></label>
       <div className="header-right">
         <div className="branch-pill"><span className="live-dot" /><div><span>Recojo en</span><b>Pueblo Libre</b></div></div>
