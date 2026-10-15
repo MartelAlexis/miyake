@@ -147,13 +147,13 @@ export default function Admin() {
 
   return <div className={`app ${sidebar ? '' : 'collapsed'}`}>
     <aside className="sidebar">
-      <div className="brand"><div className="brand-mark">G</div><div><b>GesCOM</b><span>GESTIÓN COMERCIAL</span></div></div>
+      <div className="brand"><div className="brand-mark">M</div><div><b>Miyake</b><span>GESTIÓN COMERCIAL</span></div></div>
       <nav>{navItems.map(i => <button key={i.id} className={page === i.id ? 'active' : ''} onClick={() => nav(i.id)}><Icon name={i.icon} /><span>{i.label}</span></button>)}</nav>
       <div className="sidebar-user"><div className="avatar">CG</div><div><b>C. Chugnas</b><span>Administrador</span></div></div>
     </aside>
     <main>
       <header>
-        <div className="header-left"><button className="icon-button" onClick={() => setSidebar(!sidebar)}><Icon name="menu" /></button><div className="breadcrumb"><span>GesCOM</span><Icon name="chevron" size={14} /><b>{pageInfo.label}</b></div></div>
+        <div className="header-left"><button className="icon-button" onClick={() => setSidebar(!sidebar)}><Icon name="menu" /></button><div className="breadcrumb"><span>Miyake</span><Icon name="chevron" size={14} /><b>{pageInfo.label}</b></div></div>
         <div className="header-right">
           <a className="btn" href="/" target="_blank" rel="noreferrer"><Icon name="eye" /> Ver tienda</a>
           <button className="btn" onClick={() => confirm('¿Restablecer todos los datos de ejemplo? Se perderán pedidos, ventas y cambios.') && (resetDB(), notify('Datos restablecidos'))}><Icon name="refresh" /> Restablecer demo</button>

@@ -5,7 +5,7 @@ import path from 'node:path'
 
 // Dos aplicaciones en un mismo proyecto:
 //   /            -> tienda online  (index.html)
-//   /admin.html  -> GesCOM admin   (admin.html)
+//   /admin.html  -> Miyake admin   (admin.html)
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: { alias: { '@': path.resolve(__dirname, './src') } },
