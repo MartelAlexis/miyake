@@ -1,6 +1,6 @@
 # Miyake
 
-Tienda online + panel de administración (React 19, TypeScript, Vite, Tailwind 4).
+Tienda online( https://miyake.onrender.com ) + panel de administración (React 19, TypeScript, Vite, Tailwind 4).
 Hoy funciona 100 % en el navegador (datos de ejemplo en `localStorage`); está organizado para conectar un backend sin tocar la UI.
 
 ## Ejecutar
