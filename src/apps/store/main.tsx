@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Store from './Store'
-import '../index.css'
+import { AuthProvider } from '@/features/auth/AuthProvider'
+import '@/styles/index.css'
 import './store.css'
+import StoreApp from './StoreApp'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Store />
+    <AuthProvider><StoreApp /></AuthProvider>
   </React.StrictMode>,
 )
