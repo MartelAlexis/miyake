@@ -10,6 +10,7 @@ import { ProductCard } from './components/ProductCard'
 import { Account } from './pages/Account'
 import { AuthPage } from './pages/AuthPage'
 import { Catalog } from './pages/Catalog'
+import { Claims } from './pages/Claims'
 import { Checkout } from './pages/Checkout'
 import { Detail } from './pages/Detail'
 import { Home } from './pages/Home'
@@ -52,6 +53,7 @@ export default function StoreApp() {
     const p = products.find(x => x.code === arg)
     body = p ? <Detail p={p} related={products.filter(x => x.family === p.family && x.code !== p.code).slice(0, 4)} card={card} add={add} fav={wish.includes(p.code)} onFav={() => toggleWish(p.code)} /> : loading ? <p style={{ textAlign: 'center', padding: 40 }}>Cargando…</p> : <Empty title="Producto no disponible" />
   } else if (view === 'checkout') body = <Checkout lines={lines} subtotal={subtotal} onDone={o => { setCart({}); go('/pedido/' + o.number) }} notify={notify} />
+  else if (view === 'reclamos') body = <Claims notify={notify} />
   else if (view === 'pedido') body = <OrderDone number={arg ?? ''} />
   else if (view === 'login' || view === 'registro') body = <AuthPage mode={view === 'login' ? 'login' : 'register'} next={route.query.get('next')} />
   else if (view === 'cuenta') body = user && user.role === 'cliente' ? <Account tab={arg === 'datos' ? 'datos' : 'pedidos'} notify={notify} /> : <AuthPage mode="login" next="/cuenta" />

@@ -7,6 +7,7 @@ import { Icon } from '@/shared/components/Icon'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { services } from '@/services'
 import type { CartLine } from '../components/CartDrawer'
+import { COMPANY } from '../company'
 
 export function Checkout({ lines, subtotal, onDone, notify }: { lines: CartLine[]; subtotal: number; onDone: (o: Order) => void; notify: (m: string) => void }) {
   const { user } = useAuth()
@@ -15,6 +16,7 @@ export function Checkout({ lines, subtotal, onDone, notify }: { lines: CartLine[
   const [f, setF] = useState({ name: mine?.company || mine?.name || '', doc: mine?.doc ?? '', phone: mine?.phone ?? '', email: mine?.email ?? '', delivery: 'Despacho' as 'Despacho' | 'Recojo', address: mine?.address ?? '', city: mine?.city || 'Lima', payment: 'Yape', invoiceType: (mine?.doc?.length === 11 ? 'Factura' : 'Boleta') as InvoiceType })
   const [err, setErr] = useState<Record<string, string>>({})
   const [busy, setBusy] = useState(false)
+  const [consent, setConsent] = useState(false)
   const set = (k: string, v: string) => setF(s => ({ ...s, [k]: v }))
   const shipping = shippingFor(subtotal, f.delivery, f.city)
   if (lines.length === 0) return <Empty title="Tu carrito está vacío" text="Agrega productos antes de pagar." />
@@ -28,10 +30,11 @@ export function Checkout({ lines, subtotal, onDone, notify }: { lines: CartLine[
     if (!/^9\d{8}$/.test(f.phone)) e.phone = 'Celular de 9 dígitos (empieza con 9)'
     if (!/^\S+@\S+\.\S+$/.test(f.email)) e.email = 'Correo no válido'
     if (f.delivery === 'Despacho' && f.address.trim().length < 5) e.address = 'Ingresa la dirección de entrega'
+    if (!consent) e.consent = 'Debes aceptar el tratamiento de tus datos personales'
     setErr(e)
     if (Object.keys(e).length) return notify('Revisa los campos marcados')
     setBusy(true)
-    const r = await services.orders.place({ ...f, address: f.delivery === 'Recojo' ? 'Recojo en tienda Pueblo Libre' : f.address, items: lines.map(l => ({ code: l.product.code, description: l.product.description, qty: l.qty, price: l.product.price })) })
+    const r = await services.orders.place({ ...f, consent, address: f.delivery === 'Recojo' ? 'Recojo en tienda Pueblo Libre' : f.address, items: lines.map(l => ({ code: l.product.code, description: l.product.description, qty: l.qty, price: l.product.price })) })
     setBusy(false)
     if (r.ok) onDone(r.data); else notify(r.error)
   }
@@ -46,6 +49,9 @@ export function Checkout({ lines, subtotal, onDone, notify }: { lines: CartLine[
         {f.delivery === 'Despacho' && <>{field('address', 'Dirección', 'Av. / Jr. / Calle y número', true)}{field('city', 'Ciudad')}</>}
         <label className="full"><span>Método de pago</span><select value={f.payment} onChange={e => set('payment', e.target.value)}><option>Yape</option><option>Transferencia</option><option>Tarjeta</option><option>Contra entrega</option></select></label>
       </div>
+      <label className="consent"><input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} />
+        <span>Autorizo el tratamiento de mis datos personales para gestionar mi pedido, conforme a la Ley N.° 29733 (Protección de Datos Personales). Puedes ejercer tus derechos ARCO escribiendo a {COMPANY.email}.</span></label>
+      {err.consent && <em className="consent-err">{err.consent}</em>}
       <p className="note">Esta tienda es una demostración: no se realiza ningún cobro real.</p>
     </div>
     <aside className="panel pad summary"><h2>Resumen</h2>

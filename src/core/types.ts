@@ -7,7 +7,7 @@ export type OrderItem = { code: string; description: string; qty: number; price:
 export type OrderStatus = 'Pendiente' | 'Confirmado' | 'Enviado' | 'Entregado' | 'Cancelado'
 export type InvoiceType = 'Boleta' | 'Factura'
 export type Order = { number: string; userId?: string; invoiceType?: InvoiceType; date: string; name: string; doc: string; phone: string; email: string; delivery: 'Recojo' | 'Despacho'; address: string; city: string; payment: string; items: OrderItem[]; subtotal: number; shipping: number; total: number; status: OrderStatus }
-export type OrderInput = Omit<Order, 'number' | 'userId' | 'date' | 'status' | 'subtotal' | 'shipping' | 'total'>
+export type OrderInput = Omit<Order, 'number' | 'userId' | 'date' | 'status' | 'subtotal' | 'shipping' | 'total'> & { /** Ley 29733: el cliente aceptó el tratamiento de sus datos. */ consent?: boolean }
 export type Sale = { id: string; date: string; docRef: string; code: string; description: string; qty: number; price: number; amount: number; channel: 'Tienda' | 'Mostrador'; status: 'Emitida' | 'Anulada' }
 
 /* ---------- Autenticación ---------- */
@@ -18,3 +18,7 @@ export type Session = { token: string; user: User; expiresAt: number /* epoch ms
 export type RegisterInput = { name: string; email: string; password: string } & Partial<Profile>
 export type ProfileInput = { name: string } & Profile
 export const isStaff = (u: { role: Role } | null | undefined) => !!u && u.role !== 'cliente'
+
+/* ---------- Libro de reclamaciones ---------- */
+export type Claim = { number: string; type: 'Reclamo' | 'Queja'; name: string; doc: string; email: string; phone: string; orderNumber: string; detail: string; requestText: string; createdAt: string; consentAt: string; status: 'Pendiente' | 'Atendido'; response: string }
+export type ClaimInput = Pick<Claim, 'type' | 'name' | 'doc' | 'email' | 'phone' | 'orderNumber' | 'detail' | 'requestText'> & { consent: boolean }

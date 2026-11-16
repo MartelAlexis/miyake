@@ -49,7 +49,7 @@ export function SiteFooter() {
     <div className="site-footer-in">
       <div><div className="foot-brand"><span className="brand-mark">M</span><b>{COMPANY.name}</b></div><p>{COMPANY.tagline}. Equipamos tu punto de venta con productos confiables, factura electrónica y soporte especializado.</p></div>
       <div><h5>Comprar</h5>{categories.map(([c]) => <a key={c} href={`#/catalogo?cat=${encodeURIComponent(c)}`}>{c}</a>)}<a href="#/catalogo?cat=Ofertas">Ofertas</a></div>
-      <div><h5>Mi cuenta</h5><a href="#/login">Ingresar</a><a href="#/registro">Crear cuenta</a><a href="#/cuenta">Mis pedidos</a><a href="#/checkout">Finalizar compra</a></div>
+      <div><h5>Mi cuenta</h5><a href="#/login">Ingresar</a><a href="#/registro">Crear cuenta</a><a href="#/cuenta">Mis pedidos</a><a href="#/checkout">Finalizar compra</a><a href="#/reclamos">Libro de reclamaciones</a></div>
       <div><h5>Contacto</h5><span>{COMPANY.phone} · WhatsApp {COMPANY.whatsapp}</span><span>{COMPANY.email}</span><span>{COMPANY.address}</span><span>{COMPANY.hours}</span><a href="/admin.html">Acceso personal →</a></div>
     </div>
     <div className="site-footer-bottom"><span>© {new Date().getFullYear()} {COMPANY.name} · {COMPANY.tagline}</span><span>Garantía asegurada · Envíos a todo el Perú · Comprobante electrónico</span></div>

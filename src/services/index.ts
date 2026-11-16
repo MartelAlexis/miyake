@@ -21,6 +21,7 @@ export const services: Services = {
     place: after(base.orders.place, 'orders', 'products', 'sales', 'clients'),
     setStatus: after(base.orders.setStatus, 'orders', 'products', 'sales'),
   },
+  claims: { ...base.claims, create: after(base.claims.create, 'claims'), respond: after(base.claims.respond, 'claims') },
   sales: { ...base.sales, counterSale: after(base.sales.counterSale, 'sales', 'products') },
 }
 export type { Services } from './contracts'

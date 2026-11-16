@@ -16,6 +16,7 @@ import { Clients } from './pages/Clients'
 import { Stock } from './pages/Stock'
 import { Cash } from './pages/Cash'
 import { Periods } from './pages/Periods'
+import { Claims } from './pages/Claims'
 import { MovementMenu } from './pages/Movements'
 
 const initials = (name: string) => name.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase()
@@ -62,6 +63,7 @@ export default function AdminApp() {
         {page === 'stock' && <Stock {...common} />}
         {page === 'caja' && <Cash search={search} setSearch={setSearch} notify={notify} />}
         {page === 'periodos' && <Periods search={search} setSearch={setSearch} notify={notify} />}
+        {page === 'reclamos' && <Claims search={search} notify={notify} />}
         {page === 'ingresos' && <MovementMenu items={inbound} type="Ingreso" notify={notify} />}
         {page === 'salidas' && <MovementMenu items={outbound} type="Salida" notify={notify} />}
       </section>
