@@ -1,4 +1,4 @@
-import type { Client, Order, OrderInput, OrderStatus, Product, ProfileInput, RegisterInput, Sale, Session, User } from '@/core/types'
+import type { Claim, ClaimInput, Client, Order, OrderInput, OrderStatus, Product, ProfileInput, RegisterInput, Sale, Session, User } from '@/core/types'
 import type { Result } from '@/core/result'
 
 /* CONTRATOS DE LOS SERVICIOS.
@@ -41,6 +41,15 @@ export interface OrdersService {
 export interface SalesService {
   list(): Promise<Sale[]>
   counterSale(code: string, qty: number): Promise<Result>
+  /** Dataset ventas_detalle con cliente_hash (sin datos personales). Solo existe con backend. */
+  exportDataset?(): Promise<string>
+}
+
+export interface ClaimsService {
+  /** Público: el libro de reclamaciones no exige sesión. */
+  create(input: ClaimInput): Promise<Result<Claim>>
+  list(): Promise<Claim[]>
+  respond(number: string, response: string): Promise<Result>
 }
 
 export interface Services {
@@ -49,6 +58,7 @@ export interface Services {
   clients: ClientsService
   orders: OrdersService
   sales: SalesService
+  claims: ClaimsService
   /** Solo existe en modo local (restablece los datos de ejemplo). */
   resetDemo?: () => Promise<void>
 }

@@ -15,4 +15,5 @@ export const navItems: { id: Page; label: string; icon: IconName }[] = [
   { id: 'stock', label: 'Stock valorizado', icon: 'layers' },
   { id: 'ingresos', label: 'Ingresos almacén', icon: 'arrow-in' },
   { id: 'salidas', label: 'Salidas almacén', icon: 'arrow-out' },
+  { id: 'reclamos', label: 'Libro de reclamaciones', icon: 'bell' },
 ]

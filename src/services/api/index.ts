@@ -1,6 +1,8 @@
+import { config } from '@/core/config'
 import { http } from '@/core/http'
+import { getSession } from '@/core/session'
 import { ok } from '@/core/result'
-import type { Client, Order, Product, Sale, Session, User } from '@/core/types'
+import type { Claim, Client, Order, Product, Sale, Session, User } from '@/core/types'
 import type { Services } from '../contracts'
 import { attempt } from './util'
 
@@ -33,5 +35,15 @@ export const apiServices: Services = {
   sales: {
     list: () => http<Sale[]>('/sales'),
     counterSale: (code, qty) => attempt(async () => { await http('/sales/counter', { method: 'POST', body: { code, qty } }); return ok() }),
+    exportDataset: async () => {
+      const res = await fetch(config.apiUrl + '/exports/ventas-detalle.csv', { headers: { Authorization: `Bearer ${getSession()?.token ?? ''}` } })
+      if (!res.ok) throw new Error('No se pudo exportar el dataset')
+      return res.text()
+    },
+  },
+  claims: {
+    create: input => attempt(async () => ok(await http<Claim>('/claims', { method: 'POST', body: input }))),
+    list: () => http<Claim[]>('/claims'),
+    respond: (number, response) => attempt(async () => { await http(`/claims/${encodeURIComponent(number)}`, { method: 'PATCH', body: { response } }); return ok() }),
   },
 }

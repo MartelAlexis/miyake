@@ -1,5 +1,5 @@
 import { useQuery } from '@/core/query'
-import type { Client, Order, Product, Sale } from '@/core/types'
+import type { Claim, Client, Order, Product, Sale } from '@/core/types'
 import { services } from '.'
 
 /* Hooks de lectura que usa la UI. Las claves permiten refrescar por prefijo (ver services/index.ts). */
@@ -14,3 +14,4 @@ export const useSales = () => useQuery('sales', services.sales.list, none<Sale>(
 export const useOrder = (number: string) =>
   useQuery<Order | null>('orders:one:' + number, () => services.orders.getByNumber(number), null)
 export const useMyOrders = (userId: string) => useQuery('orders:mine:' + userId, services.orders.listMine, none<Order>())
+export const useClaims = () => useQuery('claims', services.claims.list, none<Claim>())
